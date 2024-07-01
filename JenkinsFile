@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    docker {
-        image 'node:20' // Use the desired Node.js version
-    }
-
     stages {
         stage('Setup') {
             steps {
