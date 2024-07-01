@@ -1,24 +1,26 @@
 pipeline {
     agent any
-    environment {
-        PATH = "$HOME/.nvm/versions/node/v14.x.x/bin:$PATH"
-    }
+
     stages {
         stage('Setup') {
             steps {
                 sh '''
-                   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-                   export NVM_DIR="$HOME/.nvm"
-                   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-                   nvm install 14
+                   curl -sL https://deb.nodesource.com/setup_14.x | bash -
+                   apt-get install -y nodejs
                 '''
             }
         }
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
-        // Other stages...
     }
 }
